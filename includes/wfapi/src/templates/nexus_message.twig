@@ -1,0 +1,208 @@
+{# COUNTER #}
+{% set i = 0 %}
+{% set y = 0 %}
+
+{# VALIDATOR #}
+{% set validator = 0 %}
+
+{# ICON #}
+{% set iconSuccess = "/img/mail/true.png" %} 
+{% set iconError = "/img/mail/_error.png" %} 
+{% set iconNice = "/img/mail/nice.png" %} 
+{% set iconBad = "/img/mail/bad.png" %} 
+
+{# COLOR #}
+{% set labelDefaultColor = "#919496" %}
+{% set labelSelectedColor = "#333" %}
+{% set defaultColor = "#5cb6e3" %}
+{% set successColor = "#1faa25" %}
+{% set errorColor = "#b63434" %}
+
+{# BACKGROUND #}
+{% set defaultBackGround = "#ffffff" %}
+{% set defaultBackGroundOdd = "#fcfcfc" %}
+{% set successBackGround = "#efffb2" %}
+{% set errorBackGround = "#fff4f4" %}
+
+{# COUNTER & OPTIONS #}
+{% set total = 0 %} 
+{% set totalOption = 0 %}
+{% set devise = null %} 
+{% set devisePosition = null %} 
+
+{# VIEW #}
+{%for fld in wfc.fields %}
+
+  {% if (fld.type == 'select_single' or fld.type == 'select_multiple') %}
+
+    {% set i = i+1 %}
+      
+    <h4 style="position:relative;text-align:left;color:#478fb2!important;padding:20px 0 20px 0;margin:0;font-size:14px;">
+    {{ fld.label }}
+    </h4>
+
+    <table cellspacing="0" style="font-size:14px;line-height:135%;border-bottom:1px solid #eaeaea;width: 100%;">
+      <tbody>
+        {%for option in attribute(entry, fld.nexus_name) %}
+
+          {# DEFAULT CONFIG #}
+          {% set y = y+1 %} 
+          {% set totalOption = totalOption + 1 %}
+          {% set background = defaultBackGround %}  
+          {% set labelWidth = 70 %}
+          {% set labelColor = labelDefaultColor %}
+          {% set labelSelectedColor = labelSelectedColor %}
+          {% set shemaIcon = "" %}  
+          {% set resultIcon = "" %}  
+          {% set resultColor = defaultColor %}  
+          {% set resultBackground = defaultBackGround %} 
+          
+          {# CUSTOM CONFIG #}
+          {% if ( y is odd ) %}
+            {% set background = defaultBackGroundOdd %}
+            {% set resultBackground = defaultBackGroundOdd %} 
+          {% endif %}
+
+          {# VALIDATOR CONFIG #}
+          {% set validator = option.validator %}
+
+          {# VALIDATOR_BOOLEAN #}
+          {% if validator == 0 %}  
+
+            {# SHEMA STATE #}
+            {% set labelWidth = 60 %}
+            {% if option.shema == "valid" %}
+              {% set shemaIcon = iconSuccess %}  
+            {% elseif option.shema == "error" %}
+              {% set shemaIcon = iconError %}  
+            {% endif %}
+
+            {# RESULT STATE #}
+            {% if option.result == "valid" %}
+              {# VALID RESULT #}
+              {% set total = total + 1 %}
+              {% set resultIcon = iconNice %}  
+              {% set resultColor = successColor %}
+              {% set resultBackground = successBackGround %} 
+            {% elseif option.result == "error" %}
+              {# ERROR RESULT #}
+              {% set resultIcon = iconBad %}  
+              {% set resultColor = errorColor %}
+              {% set resultBackground = errorBackGround %} 
+            {% endif %}
+
+          {# VALIDATOR_NUMBER #}
+          {% elseif validator == 1 %}
+
+            {% set total = total + option.result %}
+
+          {# VALIDATOR_PRICE #}
+          {% elseif validator == 2 %} 
+          
+            {% set total = total + option.result %}
+            {% set devise = option.devise %} 
+            {% set devisePosition = option.devisePosition %} 
+
+          {% endif %}
+
+          <tr style="background-color:{{ background }}">
+            
+            <th style="text-align:left;{% if (option.result != null ) %}color:{{labelSelectedColor}};{% else %}color:{{labelColor}};font-weight: 400;{% endif %}padding:10px 10px 10px 0;border-top:1px solid #eaeaea;border-right: 1px solid #f8f8f8;width:{{labelWidth}}%;position:relative;">
+              {{ option.label }}
+            </th>
+
+            {# VALIDATOR_BOOLEAN #}
+            {% if validator == 0 %}  
+
+              <td style="text-align:center;padding:0;border-top:1px solid #eaeaea;width:52px;border-right: 1px solid #f8f8f8;color:#d4d4d4;">
+                {% if (shemaIcon != "" ) %}
+                  <img alt="shema" src="{{entry.static_url}}{{ shemaIcon }}" style="display: block; max-width: 16px;height: auto; margin:0 auto"/>
+                {% endif %}
+              </td>
+
+              <td style="text-align:center;background:{{ resultBackground }} !important;color: {{ resultColor }};padding:0;border-top:1px solid #eaeaea;width:52px;">
+                {% if (resultIcon != "" ) %}
+                  <img alt="state" src="{{entry.static_url}}{{ resultIcon }}" style="display: block; max-width: 22px;height: auto; margin:0 auto;"/>
+                {% endif %}
+              </td>
+
+            {# VALIDATOR_NUMBER #}
+            {% elseif validator == 1 %}
+            
+              <td style="text-align:center;background:{{ resultBackground }} !important;color: {{ resultColor }};padding:0;border-top:1px solid #eaeaea;width:30;">
+                {{ option.result }}
+              </td>
+
+            {# VALIDATOR_PRICE #}
+            {% elseif validator == 2 %}  
+
+              <td style="text-align:center;background:{{ resultBackground }} !important;color: {{ resultColor }};padding:0;border-top:1px solid #eaeaea;width:30%;">
+                {% if devisePosition == "before" %}
+                  {{ devise }} {{ option.result }}
+                {% else %}  
+                  {{ option.result }} {{ devise }} 
+                {% endif %}
+              </td>
+
+            {% endif %}
+
+          </tr>
+        {%endfor%} 
+      </tbody>
+    </table>
+
+  {% endif %}
+
+{%endfor%}  
+
+
+<table cellspacing="0" style="font-size:14px;line-height:135%;border-top:2px solid #eaeaea;border-bottom:2px solid #eaeaea;width: 100%;max-width:70%;margin: 40px 0 40px auto;">
+  <tbody>
+
+    <tr style="background-color:{{ background }}">
+
+      {# VALIDATOR_BOOLEAN #}
+
+      {% if validator == 0 %}
+
+          <th style="text-align:right;color:{{labelSelectedColor}};padding:10px 10px 10px 0;border-right: 1px solid #f8f8f8;width:54%;position:relative;">
+            Result
+          </th>
+
+          <td style="text-align:center;background:{{ defaultBackGround }} !important;color: {{ defaultColor }};padding:0;width:46%;padding:10px 0;font-weight:bold;">
+          {{ total }} / {{ totalOption }} 
+          </td>
+
+      {# VALIDATOR_NUMBER #}
+
+      {% elseif validator == 1 %}
+
+          <th style="text-align:right;color:{{labelSelectedColor}};padding:10px 10px 10px 0;border-right: 1px solid #f8f8f8;width:54%;position:relative;">
+            Score
+          </th>
+
+          <td style="text-align:center;background:{{ defaultBackGround }} !important;color: {{ defaultColor }};padding:0;width:46%;padding:10px 0;font-weight:bold;">
+          {{ total }} point(s)
+          </td>
+
+      {# VALIDATOR_PRICE #}
+
+      {% elseif validator == 2 %} 
+
+          <th style="text-align:right;color:{{labelSelectedColor}};padding:10px 10px 10px 0;border-right: 1px solid #f8f8f8;width:54%;position:relative;">
+            Total
+          </th>
+
+          <td style="text-align:center;background:{{ defaultBackGround }} !important;color: {{ defaultColor }};padding:0;width:46%;padding:10px 0;font-weight:bold;">
+            {% if devisePosition == "before" %}
+              {{ devise }} {{ total }}
+            {% else %}
+              {{ total }} {{ devise }}
+            {% endif %}
+          </td>
+
+      {% endif %}
+
+    </tr>
+  </tbody>
+</table>

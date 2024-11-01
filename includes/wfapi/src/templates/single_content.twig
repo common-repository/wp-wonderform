@@ -1,0 +1,3 @@
+{% set entry = resultset %} 
+<h2>{{ include(template_from_string(wfc.content_title)) |raw }}</h2>
+<p>{{ include(template_from_string(wfc.content_body)) |raw }}</p>

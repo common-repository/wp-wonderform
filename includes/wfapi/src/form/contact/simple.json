@@ -1,0 +1,18 @@
+{
+  "forms": [
+    {
+      "name": "contact-simple",
+      "entries_table": "wf_addonentry",
+      "title": "Simple Contact",
+      "front_publish_enabled": true,
+      "public_search_enabled": false,
+      "is_addon": true,
+      "create_table": true,
+      "create_entries": true,
+      "delete_entries": true,
+      "search_entries": true,
+      "published": false,
+      "wf_producttype_name": "contact-simple"
+    }
+  ]
+}

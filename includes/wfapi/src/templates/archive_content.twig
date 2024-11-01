@@ -1,0 +1,16 @@
+{% block body %}
+  {% for entry in resultset.rows %}
+      <article class="content">
+          <div class="date"><time datetime="{{ entry.created_tms|date('c') }}">{{ entry.created_tms|date('l, F j, Y') }}</time></div>
+          <header>
+              <h2><a href="{{ base_item_url }}{{ entry.id }}">{{ include(template_from_string(wfc.content_title)) |raw }}</a></h2>
+          </header>
+
+          <div class="snippet">
+              <p>{{ include(template_from_string(wfc.content_excerpt)) |raw }} </p>
+          </div>
+      </article>
+  {% else %}
+      <p>{{ include(template_from_string(wfc.content_body)) |raw }} </p>
+  {% endfor %}
+{% endblock %}

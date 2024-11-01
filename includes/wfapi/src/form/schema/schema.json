@@ -1,0 +1,78 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "definitions": {
+    "form_config": {
+      "definitions": {
+        "field_config": {
+          "type": "object",
+          "properties": {
+            "name":                 { "type": "string" },
+            "type":                 { "type": "string" },
+            "label":                { "type": "string" },
+            "legend":               { "type": "string" },
+            "description":          { "type": "string" },
+            "pattern":              { "type": "string" },
+            "default_value":        { "type": "string" },
+            "required":             { "type": "boolean", "default": false },
+            "uniq":                 { "type": "boolean", "default": false },
+            "searchable":           { "type": "boolean", "default": true },
+            "editable":             { "type": "boolean", "default": true },
+            "indexable":            { "type": "boolean", "default": false },
+            "backend_filled":       { "type": "boolean", "default": false },
+            "len":                  { "type": "integer", "default": 11 },
+            "precision":            { "type": "integer", "default": 2 },
+            "ref_form_config":      { "type": "string" }
+          },
+
+          "required": ["name", "type", "label"]
+        }
+      },
+
+      "type": "object",
+
+      "properties": {
+        "name":                   { "type": "string" },
+        "title":                  { "type": "string" },
+        "module_name":            { "enum": [ "wfc", "custom" ] },
+        "description":            { "type": "string" },
+        "edit_template":          { "type": "string" },
+        "parent_name":            { "type": "string" },
+        "view_template":          { "type": "string" },
+        "search_template":        { "type": "string" },
+        "wf_sub_producttype_name":    { "type": "string"},
+        "is_addon":               { "type": "boolean", "default": false },
+        "create_table":           { "type": "boolean", "default": true },
+        "create_entries":         { "type": "boolean", "default": true },
+        "delete_entries":         { "type": "boolean", "default": true },
+        "search_entries":         { "type": "boolean", "default": true },
+        "front_publish_enabled":  { "type": "boolean", "default": false },
+        "public_search_enabled":  { "type": "boolean", "default": false },
+        "published":              { "type": "boolean", "default": false },
+        "fields": {
+          "type": "array",
+          "items": { 
+            "type": "object",
+            "oneOf": [ { "$ref": "#/definitions/form_config/definitions/field_config" } ]
+          }
+        }
+      },
+
+      "required": ["name", "title", "module_name", "wf_sub_producttype_name", "fields"]
+    }
+  },
+
+  "type": "object",
+
+  "properties": {
+    "forms": {
+      "type": "array",
+      "minItems": 1,
+      "items": { 
+        "type": "object",
+        "oneOf": [ { "$ref": "#/definitions/form_config" } ]
+      }
+    }
+  },
+
+  "required": ["forms"]
+}

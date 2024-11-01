@@ -1,0 +1,65 @@
+{
+  "forms": [
+    {
+      "name": "contact-advanced",
+      "entries_table": "wf_addonentry",
+      "title": "Advanced Contact",
+      "front_publish_enabled": true,
+      "public_search_enabled": false,
+      "is_addon": true,
+      "create_table": true,
+      "create_entries": true,
+      "delete_entries": true,
+      "search_entries": true,
+      "published": false,
+      "wf_producttype_name": "contact-advanced",
+      "fields": [
+        {
+          "name": "subject",
+          "type": "string",
+          "required": false,
+          "create_column": true,
+          "searchable": true,
+          "label": "Subject",
+          "len": 255
+        },
+        {
+          "name": "first_name",
+          "type": "string",
+          "required": false,
+          "create_column": true,
+          "searchable": true,
+          "label": "FirstName",
+          "len": 32
+        },
+        {
+          "name": "last_name",
+          "type": "string",
+          "required": false,
+          "create_column": true,
+          "searchable": true,
+          "label": "LastName",
+          "len": 32
+        },
+        {
+          "name": "email",
+          "type": "string",
+          "label": "Email",
+          "create_column": true,
+          "searchable": true,
+          "required": false,
+          "len": 64
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "required": true,
+          "searchable": true,
+          "create_column": true,
+          "label": "Message",
+          "len": 65555
+        }
+      ]
+    }
+  ]
+}

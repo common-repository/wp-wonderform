@@ -1,0 +1,16 @@
+{# <h2>FormName : {{wfc.name}} </h2> #}
+<table cellspacing="0" style="font-size:14px;line-height:135%;border-bottom:1px solid #eaeaea;width: 100%;">
+	<tbody>
+		{%for fldName in wfc.display_fields %}
+      {% set fld = attribute(wfc.fields, fldName) %} 
+			<tr style="background-color:#ffffff">
+				<th style="text-align:left;color:#555555;padding:10px;border-top:1px solid #eaeaea;border-right: 1px solid #f8f8f8;">
+					{{ fld.label }}
+				</th>
+				<td style="text-align:left;color:#555555;padding:10px;border-top:1px solid #eaeaea">
+					{{ include(template_from_string(fld.name_template)) |raw }}
+				</td>
+			</tr>
+		{%endfor%}	
+	</tbody>
+</table>

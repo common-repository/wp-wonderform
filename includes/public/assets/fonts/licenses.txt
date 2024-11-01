@@ -1,0 +1,13 @@
+IconMoon - Free
+Glyphs Available : 490
+Grid Size : 16 
+Designer : Keyamoon 
+License : GPL (http://www.gnu.org/licenses/gpl.html)
+
+Elegant Themes - Line Icons
+Glyphs Available : 100
+Grid Size : 32
+Designer : Elegant Themes
+License: GPL (http://www.gnu.org/licenses/gpl.html)
+
+

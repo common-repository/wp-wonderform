@@ -1,0 +1,24 @@
+body {
+color: #ffd200 !important;
+padding: 0 !important;
+text-align: center;
+}
+
+body,
+.media-modal-backdrop {
+	background-color: #363839 !important;
+}
+#wpbody,
+#wpcontent, 
+#wpbody-content {
+    padding: 0 !important ;	
+    margin: 0 !important ;
+}
+#adminmenuback, 
+#adminmenuwrap, 
+#update-nag, 
+.update-nag,
+#wpfooter {
+    display: none !important;	
+}
+

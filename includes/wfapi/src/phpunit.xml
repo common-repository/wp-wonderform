@@ -1,0 +1,7 @@
+<phpunit bootstrap="bootstrap.php">
+  <testsuites>
+    <testsuite name="WonderForm">
+      <file>core/tests/WFDataTypeTest.php</file>
+    </testsuite>
+  </testsuites>
+</phpunit>
